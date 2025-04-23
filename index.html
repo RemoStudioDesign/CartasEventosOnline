@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Imagen Aleatoria</title>
+  <style>
+    body {
+      text-align: center;
+	color:white;
+      margin-top: 50px;
+      font-family: sans-serif;
+    }
+
+    #loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #ddd;
+      border-top-color: #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    img.visible {
+      opacity: 1;
+    }
+	  
+	  #boton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: white;
+      color: darkblue;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    #boton:hover {
+      background-color: orange;
+    }
+	  
+	 #imagenjuego {
+      opacity: 1;
+	 box-shadow: 0 0 0 rgba(0,0,0,0);
+	 width:70%;
+		 
+    }
+	  
+	 #imagenestudio {
+      opacity: 1;
+	 box-shadow: 0 0 0 rgba(0,0,0,0);
+		 
+    }
+	  #cajafinal {
+		  padding: 2%;
+		  padding-bottom: 0.5%;
+		  background-color:white; 
+		  position: fixed;
+		  bottom: 0;
+		  left: 0;
+		  width: 100%;
+	  }
+	  
+	  #randomImage {
+		  width: 70%;
+	  }
+	  
+	  /* Cuando la anchura de la pantalla es de 700 o más */
+@media only screen and (min-width: 500px) {
+    #randomImage {
+    	 width: 20%;
+    }
+	
+	#imagenjuego {
+		width: 30%
+	  }
+  </style>
+</head>
+<body style="background-color:darkblue">
+	
+	<img id="imagenjuego" src="img/logoMAREA.png" alt="Logo Marea" width="20%">
+
+ <h1 style="font-weight:200">¿Qué carta te ha tocado?</h1>
+
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <img id="randomImage" src="" alt="Imagen aleatoria" opacity="1">
+	
+	<div>
+  <button id="boton">Otra carta</button>
+	</div>
+	
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	
+	<div id="cajafinal">
+		<img id="imagenestudio" src="img/remostudio.png" alt="Logo Remo Studio" width="15%">
+		<br>
+		<p style="color:black">©2025</p>
+	</div>
+
+  <script>
+  const images = [
+    "img/carta1.jpg",
+    "img/carta2.jpg",
+    "img/carta3.jpg",
+	"img/carta4.jpg",
+  ];
+
+ const imgElement = document.getElementById("randomImage");
+    const loader = document.getElementById("loader");
+    const boton = document.getElementById("boton");
+
+    function mostrarImagenAleatoria() {
+      loader.style.display = "flex";
+      imgElement.classList.remove("visible");
+
+      const randomIndex = Math.floor(Math.random() * images.length);
+      const selectedImage = images[randomIndex];
+
+      // Pre-carga de imagen
+      const tempImage = new Image();
+      tempImage.src = selectedImage;
+      tempImage.onload = () => {
+        imgElement.src = selectedImage;
+        loader.style.display = "none";
+        imgElement.classList.add("visible");
+      };
+    }
+
+    // Primera carga
+    window.onload = mostrarImagenAleatoria;
+
+    // Cambiar imagen al hacer clic en el botón o en la propia imagen
+    boton.addEventListener("click", mostrarImagenAleatoria);
+    imgElement.addEventListener("click", mostrarImagenAleatoria);
+</script>
+
+</body>
+</html>
